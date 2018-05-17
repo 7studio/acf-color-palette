@@ -133,7 +133,7 @@
          * @return  n/a
          */
         acf.add_action( 'ready append', function( $el ) {
-            // search $el for fields of type 'svg_icon'
+            // search $el for fields of type 'color_palette'
             acf.get_fields( { type : 'color_palette' }, $el ).each( function() {
                 initialize_field( $( this ) );
             } );
