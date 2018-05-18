@@ -42,8 +42,8 @@ if ( ! class_exists( 'swp_acf_plugin_color_palette' ) ) {
 		 * @date   17/02/2016
 		 * @since  1.0.0
 		 *
-		 * @param  n/a
-		 * @return n/a
+		 * @param  void
+		 * @return void
 		 */
 		function __construct() {
 			$this->settings = array(
@@ -52,47 +52,26 @@ if ( ! class_exists( 'swp_acf_plugin_color_palette' ) ) {
 				'path'		=> SWP_ACF_COLOR_PALETTE_DIR
 			);
 
-			// set text domain
-            add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
-
 			// include field
-			add_action( 'acf/include_field_types', array( $this, 'include_field_types' ) ); // v5
-			add_action( 'acf/register_fields', array( $this, 'include_field_types' ) ); // v4
+			add_action( 'acf/include_field_types', array( $this, 'include_field' ) ); // v5
+			add_action( 'acf/register_fields', array( $this, 'include_field' ) ); // v4
 		}
 
-        /**
-         * load_plugin_textdomain
-         *
-         * This function will load the textdomain file
-         *
-         * @type   function
-         * @date   20/03/2018
-         * @since  1.0.0
-         *
-         * @param  n/a
-         * @return n/a
-         */
-        function load_plugin_textdomain() {
-            load_plugin_textdomain( 'swp-acf-cp', false, plugin_basename( SWP_ACF_COLOR_PALETTE_DIR ) . '/lang' );
-        }
-
 		/**
-		 * include_field_types
+		 * include_field
 		 *
-		 * This function will include the field type class
+		 * This function will include the field type class and load textdomain
 		 *
 		 * @type   function
 		 * @date   17/02/2016
 		 * @since  1.0.0
 		 *
-		 * @param  $version (int) major ACF version. Defaults to false
-		 * @return n/a
+		 * @param  $version (int) major ACF version. Defaults to 4
+		 * @return void
 		 */
-		function include_field_types( $version = false ) {
-			// support empty $version
-			if ( ! $version ) {
-				$version = 4;
-			}
+		function include_field( $version = 4 ) {
+			// load textdomain
+			load_plugin_textdomain( 'swp-acf-cp', false, plugin_basename( SWP_ACF_COLOR_PALETTE_DIR ) . '/lang' );
 
 			include_once( "fields/class-swp-acf-color-palette-v{$version}.php" );
 		}
