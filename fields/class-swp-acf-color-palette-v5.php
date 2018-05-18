@@ -199,7 +199,7 @@ if ( ! class_exists( 'swp_acf_field_color_palette' ) )  {
 
 			$url = $this->settings['url'];
 			$version = $this->settings['version'];
-			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '';
+			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 			// register if not already (on front end)
 			// http://wordpress.stackexchange.com/questions/82718/how-do-i-implement-the-wordpress-iris-picker-into-my-plugin-on-the-front-end
