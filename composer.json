@@ -1,0 +1,24 @@
+{
+  "name": "7studio/acf-color-palette",
+  "description": "WordPress plugin to add a new ACF field type: 'Color Palette' which allows you to use the color picker with a defined color palette only.",
+  "type": "wordpress-plugin",
+  "license": "GPLv2 or later",
+  "keywords": [
+    "acf",
+    "field",
+    "color",
+    "palette",
+    "advanced custom fields"
+  ],
+  "authors": [
+    {
+      "name": "Xavier Zalawa",
+      "homepage": "https://github.com/7studio",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/7studio/acf-color-palette/issues",
+    "source": "https://github.com/7studio/acf-color-palette/"
+  }
+}
