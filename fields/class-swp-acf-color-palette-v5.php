@@ -176,7 +176,7 @@ if ( ! class_exists( 'swp_acf_field_color_palette' ) )  {
 			?>
 			<div class="acf-color-palette">
 				<?php acf_hidden_input( $hidden_input ); ?>
-                <input type="text" <?php echo acf_esc_attr( $text_input ); ?> data-alpha="true">
+        <input type="text" <?php echo acf_esc_attr( $text_input ); ?> class="color-picker" data-alpha-enabled="true">
 			</div>
 			<?php
 		}
@@ -195,33 +195,17 @@ if ( ! class_exists( 'swp_acf_field_color_palette' ) )  {
 		 * @return n/a
 		 */
 		function input_admin_enqueue_scripts() {
-			global $wp_scripts;
-
 			$url = $this->settings['url'];
 			$version = $this->settings['version'];
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			// register if not already (on front end)
-			// http://wordpress.stackexchange.com/questions/82718/how-do-i-implement-the-wordpress-iris-picker-into-my-plugin-on-the-front-end
-			if ( ! isset( $wp_scripts->registered['iris'] ) ) {
-				wp_register_style( 'wp-color-picker', admin_url( 'css/color-picker.css' ), array(), '', true );
-
-				wp_register_script( 'iris', admin_url( 'js/iris.min.js' ), array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ), '1.0.7', true );
-				wp_register_script( 'wp-color-picker', admin_url( 'js/color-picker.min.js' ), array( 'iris' ), '', true );
-
-			    wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', array(
-			        'clear'			=> __( 'Clear', 'swp-acf-cp' ),
-			        'defaultString'	=> __( 'Default', 'swp-acf-cp' ),
-			        'pick'			=> __( 'Select Color', 'swp-acf-cp' ),
-			        'current'		=> __( 'Current Color', 'swp-acf-cp' )
-			    ) );
-
-			}
-
 			wp_enqueue_style( 'wp-color-picker' );
-		    wp_enqueue_script( 'wp-color-picker' );
-
-            wp_enqueue_script( 'wp-color-picker-alpha', "{$url}assets/vendor/wp-color-picker-alpha/wp-color-picker-alpha{$min}.js", array( 'wp-color-picker' ), '2.1.3', true );
+			wp_register_script( 'wp-color-picker-alpha', "{$url}assets/vendor/wp-color-picker-alpha/wp-color-picker-alpha{$min}.js", array( 'wp-color-picker' ), "3.0.0", true );
+			wp_add_inline_script(
+				'wp-color-picker-alpha',
+				'jQuery( function() { jQuery( ".color-picker" ).wpColorPicker(); } );'
+			);
+			wp_enqueue_script( 'wp-color-picker-alpha' );
 
 			wp_enqueue_style( 'swp-acf-cp', "{$url}assets/css/input{$min}.css", array( 'wp-color-picker', 'acf-input' ), $version );
 		    wp_enqueue_script( 'swp-acf-cp', "{$url}assets/js/input{$min}.js", array( 'wp-color-picker', 'acf-input' ), $version, true );
